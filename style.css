@@ -1,0 +1,15 @@
+body {
+	margin: 0;
+	background-color: lightcyan;
+}
+
+#app {
+	height: 100vh;
+	width: 100vw;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 200px);
+	grid-gap: 20px;
+	padding: 20px;
+	justify-content: center;
+	align-content: center;
+}
