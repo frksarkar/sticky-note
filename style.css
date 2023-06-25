@@ -9,7 +9,6 @@ body {
 }
 
 #app {
-	height: 100vh;
 	width: 100vw;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, 200px);
@@ -21,9 +20,11 @@ body {
 }
 
 .note {
+	height: 250px;
 	padding: 10px;
 	font-size: large;
 	border: none;
+
 	/* resize: none; */
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -32,7 +33,11 @@ body {
 	-o-border-radius: 10px;
 }
 
-.add-note {
+.note:focus {
+	outline: none;
+}
+
+.add-note-btn {
 	width: 70px;
 	height: 70px;
 	border: none;

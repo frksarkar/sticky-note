@@ -9,25 +9,43 @@ const saveNote = function (note) {
 	localStorage.setItem('stickyNote-notes', JSON.stringify(note));
 };
 
-const createNoteElement = function (id, content) {
+const createNoteElement = function (content, id) {
+	const randomId = new Date().getTime();
 	const element = `<textarea
-    onchange="addNote(this, ${id})"
+    onchange="updateNote(this, ${id || randomId})"
+	ondblclick="deleteNote(this, ${id || randomId})"
     class="note"
     placeholder="Write something new..."
     >${content}</textarea>`;
-	noteContainer.insertAdjacentHTML('beforeend', element);
 	return element;
 };
 
-const addNote = function (e, id) {
+const addNote = function () {};
+
+const updateNote = function (e, id) {
 	console.log(e.value);
 	console.log(id);
 };
 
-const updateNote = function (id, element) {};
+const deleteNote = function (element, id) {
+	const doDelete = confirm(
+		'Are you sure you wish to delete this sticky note?'
+	);
+	const filterNote = getNotes().filter((item) => {
+		return item.id != id;
+	});
 
-const deleteNote = function (id, element) {};
+	console.log(filterNote);
+	if (doDelete) {
+	}
+};
+
+getNotes().forEach((note) => {
+	const element = createNoteElement(note.content, note.id);
+	noteContainer.insertAdjacentHTML('beforeend', element);
+});
 
 addBtn.addEventListener('click', () => {
-	createNoteElement(56, 'hello');
+	const element = createNoteElement('hello');
+	noteContainer.insertAdjacentHTML('beforeend', element);
 });
