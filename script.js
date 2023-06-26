@@ -15,16 +15,29 @@ const createNoteElement = function (content, id) {
     onchange="updateNote(this, ${id || randomId})"
 	ondblclick="deleteNote(this, ${id || randomId})"
     class="note"
-    placeholder="Write something new..."
-    >${content}</textarea>`;
+    placeholder="Write something new...">${content || ''}</textarea>`;
 	return element;
 };
 
-const addNote = function () {};
+const addNote = function () {
+	const notes = getNotes();
+	const noteObject = {
+		id: new Date().getTime(),
+		content: '',
+	};
+	// Add the newly created object into our array of objects and then push it back onto localStorage
+	notes.push(noteObject);
+	saveNote(notes); // Save all changes made
+	const element = createNoteElement();
+	noteContainer.insertAdjacentHTML('beforeend', element);
+};
 
-const updateNote = function (e, id) {
-	console.log(e.value);
-	console.log(id);
+const updateNote = function (element, id) {
+	const newNotes = getNotes();
+	const targetNote = newNotes.filter((note) => note.id == id)[0] || {};
+	targetNote.id || (targetNote.id = new Date().getTime());
+	targetNote.content = element.value;
+	saveNote(newNotes);
 };
 
 const deleteNote = function (element, id) {
@@ -35,17 +48,18 @@ const deleteNote = function (element, id) {
 		return item.id != id;
 	});
 
-	console.log(filterNote);
+	console.log();
 	if (doDelete) {
+		saveNote(filterNote);
+		element.remove();
 	}
 };
+
+// add all store notes
 
 getNotes().forEach((note) => {
 	const element = createNoteElement(note.content, note.id);
 	noteContainer.insertAdjacentHTML('beforeend', element);
 });
 
-addBtn.addEventListener('click', () => {
-	const element = createNoteElement('hello');
-	noteContainer.insertAdjacentHTML('beforeend', element);
-});
+addBtn.addEventListener('click', addNote);
