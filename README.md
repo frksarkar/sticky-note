@@ -1,3 +1,3 @@
 # sticky-note
 
-live demo link: https://faruksarkar.github.io/sticky-note/
+live demo link: https://frksarkar.github.io/sticky-note/
